@@ -80,7 +80,7 @@ useEffect(()=>{
         currency, navigate, user, getToken,isOwner,setIsOwner,axios,
         showHotelReg,setShowHotelReg,
         setSearchedCities,rooms,setRooms,
-        searchedCities
+        searchedCities,toast
     }
 
 
