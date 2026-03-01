@@ -11,6 +11,7 @@ import roomRouter from "./routes/roomRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 import cloudinary from "./configs/cloudinary.js";
 import "./models/user.js";
+import { stripeWebhooks } from "./controllers/stripeWebhooks.js";
 
 connectDB()
 
@@ -19,12 +20,15 @@ const app = express()
 app.use(cors()) //Enable Cross-Original Resourse Sharing
 app.use(express.json())
 
+app.post('/api/stripe',express.raw({type:'application/json'}),stripeWebhooks);
+
 //middleware
 app.post(
   "/api/clerk",
   express.raw({ type: "application/json" }),
   clerkWebhooks
 );
+
 app.use(clerkMiddleware())
 
 // APIto listen to clerk webhooks

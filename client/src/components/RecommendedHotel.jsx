@@ -16,10 +16,6 @@ const RecommendedHotel = () => {
     useEffect(()=>{
        filterHotels()
     },[rooms,searchedCities])
-    console.log("Rooms:", rooms);
-console.log("Searched Cities:", searchedCities);
-console.log("Recommended:", recommended);
-
   return recommended.length && (
     <div className='flex flex-col items-center px-6 md:px-16 lg:px-24 bg-slate-50 py-20'>
 

@@ -20,6 +20,7 @@
     "mongoose": "^8.23.0",
     "multer": "^1.4.5-1ts.2",
     "nodemailer": "^8.0.1",
+    "stripe": "^20.4.0",
     "svix": "^1.82.0"
   },
   "devDependencies": {
