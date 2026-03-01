@@ -1,7 +1,7 @@
 import React from 'react';
 import HotelCard from './HotelCard';
 import { useAppContext } from '../context/AppContext';
-import Title from './title';
+import Title from './Title';
 
 const FeaturedDestination = () => {
 
