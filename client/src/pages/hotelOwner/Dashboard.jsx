@@ -8,7 +8,7 @@ const Dashboard = () => {
   const {currency,user,getToken,toast,axios} = useAppContext();
     const [dashboardData, setDashboardData] = useState({
       bookings: [],
-      totalBookings: 0,
+      totalBookngs: 0,
       totalRevenue: 0,
     })
 
@@ -44,7 +44,7 @@ const Dashboard = () => {
               className='max-sm:hidden h-10'/>
               <div className='flex flex-col sm:ml-4 font-medium'>
                 <p className='text-blue-500 text-lg'>total Bookings</p>
-                <p className='text-neutral-400 text-base'>{dashboardData.totalBookings}</p>
+                <p className='text-neutral-400 text-base'>{dashboardData.totalBookngs}</p>
               </div>
            </div>
            {/*...total Revenue...*/}
@@ -89,7 +89,7 @@ const Dashboard = () => {
 
                        <td className='py-3 px-4 text-gray-700 border-t border-gray-300
                     text-center'>
-                      {currency} {item.totalprice}
+                      {currency} {item.totalPrice}
                     </td>
                     <td className='py-3 px-4 border-t border-gray-300 flex'>
                       <button className={`py-1 px-3 text-xs rounded-full mx-auto ${item.isPaid ? 'bg-green-200 text-green-600' :'bg-amber-200 text-yellow-600'}`}>
