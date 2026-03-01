@@ -1,5 +1,5 @@
 import  react, { useEffect, useState } from 'react'
-import Title from  '../../components/title'
+import Title from "../../components/Title";
 import{assets} from '../../assets/assets'
 import { useAppContext } from '../../context/AppContext'
 
@@ -34,7 +34,7 @@ const Dashboard = () => {
     
     return(
         <div>
-          <title align='left' font='outfit' title='dashboard' subtitle='moniter your room listngs,track booking and analyze revenus-all in one place.
+          <Title align='left' font='outfit' title='dashboard' subtitle='moniter your room listngs,track booking and analyze revenus-all in one place.
           stay updated with real time insight to ensure smooth operations.'/>
 
           <div className='flex gap-4 my-8'>
