@@ -97,7 +97,6 @@ export const createBooking = async (req ,res)=>{
         res.json({success:true,message:"booking created successfully"})
     } catch (error) {
         res.json({success:false,message:error.message})
-        console.log(error)
     }
 }
 
@@ -132,6 +131,6 @@ export const getUSerBookings = async (req ,res)=>{
         res.json({success:true,dashboardData : {totalBookngs,totalRevenue,bookings}})
 
     } catch (error) {
-         res.json({success:false,message:"failed to fetch bookings"})  
+         res.json({success:false,message:"failed to fetch bookings"})
     }
 }
