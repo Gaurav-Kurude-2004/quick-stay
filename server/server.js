@@ -18,9 +18,10 @@ connectDB()
 
 const app = express()
 app.use(cors()) //Enable Cross-Original Resourse Sharing
+app.post('/api/stripe',express.raw({type:'application/json'}),stripeWebhooks);
 app.use(express.json())
 
-app.post('/api/stripe',express.raw({type:'application/json'}),stripeWebhooks);
+
 
 //middleware
 app.post(

@@ -4,33 +4,62 @@ import Booking from "../models/booking.js";
 
 //api to handel stripe webhooks
 
-export const stripeWebhooks = async (request , response) =>{
-    //stripe gateway initialize
-    const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
-    const sig = request.headers['stripe-signature']
+export const stripeWebhooks = async (request, response) => {
+    const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const sig = request.headers['stripe-signature'];
     let event;
 
     try {
-        event = stripeInstance.webhooks.constructEvent(request.body,sig,process.env.STRIPE_WEBHOOK_SECRET)
+        event = stripeInstance.webhooks.constructEvent(
+            request.body,
+            sig,
+            process.env.STRIPE_WEBHOOK_SECRET
+        );
     } catch (error) {
-        response.status(400).send(`webhook error: ${error.message}`)
+        console.log("❌ Webhook Signature Error:", error.message);
+        return response.status(400).send(`Webhook error: ${error.message}`);
     }
 
-    if(event.type === "payment_intent.succeeded"){
-        const paymentIntent = event.data.object;
-        const paymentIntentId = paymentIntent.id;
+    try {
+        console.log("WEBHOOK HIT");
+console.log("Event:", event.type);
 
-        //getting session metadata 
-        const session = await stripeInstance.checkout.sessions.list({
-            payment_intent: paymentIntentId,
-        });
+        if (event.type === "payment_intent.succeeded") {
 
-        const {bookingsId} = session.data[0].metadata;
+            const paymentIntent = event.data.object;
+            const paymentIntentId = paymentIntent.id;
 
-        //mark payment as paid
-        await Booking.findByIdAndUpdate(bookingsId, {isPaid:true,paymentMethod:"Stripe"})
-    }else{
-        console.log("unhandled event type: ", event.type)
+            const sessions = await stripeInstance.checkout.sessions.list({
+                payment_intent: paymentIntentId,
+            });
+
+            if (!sessions.data.length) {
+                console.log("❌ No session found");
+                return response.json({ received: true });
+            }
+
+            const bookingId = sessions.data[0]?.metadata?.bookingId;
+            console.log("Sessions:", sessions.data);
+console.log("Metadata:", sessions.data[0]?.metadata);
+console.log("Booking ID:", sessions.data[0]?.metadata?.bookingId);
+
+            if (!bookingId) {
+                console.log("❌ bookingId missing in metadata");
+                return response.json({ received: true });
+            }
+
+            await Booking.findByIdAndUpdate(bookingId, {
+                isPaid: true,
+                paymentMethod: "Stripe"
+            });
+
+            console.log("✅ Booking updated:", bookingId);
+        }
+
+        response.json({ received: true });
+
+    } catch (error) {
+        console.log("🔥 WEBHOOK CRASH:", error);
+        response.status(500).send("Server error");
     }
-    response.json({received:true});
-}
+};
