@@ -15,15 +15,18 @@ const clerkWebhooks = async (req, res) => {
         };
 
         // verifying Headers
-        whook.verify(req.body, headers);
-        const payload = JSON.parse(req.body.toString());
+       const payload = whook.verify(req.body, headers);
+// const { data, type } = payload;
         //Getting Data from request body
         const { data, type } = payload
 
 
         //switch cases for different evevts
         switch (type) {
+            
             case "user.created": {
+                console.log(type);
+                console.log(data);
                 const userData = {
                     _id: data.id,
                     email: data.email_addresses[0].email_address,
@@ -34,6 +37,8 @@ const clerkWebhooks = async (req, res) => {
                 break;
             }
             case "user.updated": {
+                console.log(type);
+                console.log(data);
                 const userData = {
                     _id: data.id,
                     email: data.email_addresses[0].email_address,
@@ -44,6 +49,8 @@ const clerkWebhooks = async (req, res) => {
                 break;
             }
             case "user.deleted": {
+                console.log(type);
+                console.log(data);
                 await user.findByIdAndDelete(data.id);
                 break;
             }
@@ -57,7 +64,7 @@ const clerkWebhooks = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
-        res.Json({ success: false, message: error.message })
+        res.json({ success: false, message: error.message })
     }
 }
 
