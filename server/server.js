@@ -23,7 +23,13 @@ connectCloudinary();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+      "https://hotel-booking-eta-lovat.vercel.app",
+      "http://localhost:5173"
+    ],
+    credentials: true
+}));
 
 /* WEBHOOK ROUTES (MUST BE BEFORE express.json()) */
 
