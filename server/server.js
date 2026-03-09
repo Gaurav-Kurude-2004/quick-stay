@@ -33,7 +33,7 @@ app.post(
 app.use(clerkMiddleware())
 
 // APIto listen to clerk webhooks
-app.use("/api/clerk",clerkWebhooks);
+// app.use("/api/clerk",clerkWebhooks);
 
 app.get('/',(req,res)=> res.send("API is Working "))
 app.use('/api/user',userRouter)
