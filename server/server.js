@@ -16,10 +16,11 @@ import roomRouter from "./routes/roomRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 
 import "./models/user.js";
+import cloudinary from "./configs/cloudinary.js";
 
 // connect services
 connectDB();
-connectCloudinary();
+cloudinary;
 
 const app = express();
 
